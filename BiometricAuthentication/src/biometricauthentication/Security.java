@@ -5,6 +5,7 @@
  */
 package biometricauthentication;
 
+import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -13,6 +14,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.util.Iterator;
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.CipherInputStream;
@@ -28,6 +30,7 @@ import javax.crypto.spec.SecretKeySpec;
  */
 public class Security {
     
+    private static int MARGIN = 1;
     private static final byte[] key = "MyDifficultPassw".getBytes();;
     private static final String transformation = "Blowfish";
 
@@ -81,6 +84,32 @@ public class Security {
     }
     
     public static boolean checkForMatch(Hand hand){
-        return BiometricAuthentication.HandList.contains(hand);
+        for (Iterator<Hand> iterator = 
+                BiometricAuthentication.HandList.iterator(); iterator.hasNext();) {
+            Hand storedHand = iterator.next();
+            
+            double slf = storedHand.getLittleFingerLen();
+            double srf = storedHand.getRingFingerLen();
+            double smf = storedHand.getMiddleFingerLen();
+            double sinf = storedHand.getIndexFingerLen();
+            double stf = storedHand.getThumbFingerLen();
+            
+            double lf = hand.getLittleFingerLen();
+            double rf = hand.getRingFingerLen();
+            double mf = hand.getMiddleFingerLen();
+            double inf = hand.getIndexFingerLen();
+            double tf = hand.getThumbFingerLen();
+            
+            if(
+                (lf >= slf-MARGIN && lf <= slf+MARGIN)
+                && (rf >= srf-MARGIN && rf <= srf+MARGIN)
+                && (mf >= smf-MARGIN && mf <= smf+MARGIN)
+                && (inf >= sinf-MARGIN && inf <= sinf+MARGIN)
+                && (tf >= stf-MARGIN && tf <= stf+MARGIN) 
+                    ){
+                return true;
+            }
+        }
+        return false;
     }
 }
