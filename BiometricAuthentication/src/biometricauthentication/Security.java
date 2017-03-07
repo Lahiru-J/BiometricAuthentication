@@ -8,10 +8,8 @@ package biometricauthentication;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.OutputStream;
 import java.io.Serializable;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -29,8 +27,6 @@ import javax.crypto.spec.SecretKeySpec;
  * @author Lahiru
  */
 public class Security {
-//    private static final byte[] key = "MyDifficultPassw".getBytes();
-//    private static final String transformation = "AES/ECB/PKCS5Padding";
     
     private static final byte[] key = "MyDifficultPassw".getBytes();;
     private static final String transformation = "Blowfish";
@@ -60,27 +56,31 @@ public class Security {
         } catch (IllegalBlockSizeException e) {
             e.printStackTrace();
         }
-}
-
-public static Object decrypt() 
-        throws IOException, NoSuchAlgorithmException, NoSuchPaddingException, 
-        InvalidKeyException, BadPaddingException {
-    
-    SecretKeySpec sks = new SecretKeySpec(key, transformation);
-    Cipher cipher = Cipher.getInstance(transformation);
-    cipher.init(Cipher.DECRYPT_MODE, sks);
-
-    CipherInputStream cipherInputStream = 
-            new CipherInputStream(new ObjectInputStream(new FileInputStream("src/SerializedObjects/handList.ser")), cipher);
-    ObjectInputStream inputStream = new ObjectInputStream(cipherInputStream);
-    SealedObject sealedObject;
-    
-    try {
-        sealedObject = (SealedObject) inputStream.readObject();
-        return sealedObject.getObject(cipher);
-    } catch (ClassNotFoundException | IllegalBlockSizeException | BadPaddingException e) {
-        e.printStackTrace();
-        return null;
     }
-}
+
+    public static Object decrypt() 
+            throws IOException, NoSuchAlgorithmException, NoSuchPaddingException, 
+            InvalidKeyException, BadPaddingException {
+
+        SecretKeySpec sks = new SecretKeySpec(key, transformation);
+        Cipher cipher = Cipher.getInstance(transformation);
+        cipher.init(Cipher.DECRYPT_MODE, sks);
+
+        CipherInputStream cipherInputStream = 
+                new CipherInputStream(new ObjectInputStream(new FileInputStream("src/SerializedObjects/handList.ser")), cipher);
+        ObjectInputStream inputStream = new ObjectInputStream(cipherInputStream);
+        SealedObject sealedObject;
+
+        try {
+            sealedObject = (SealedObject) inputStream.readObject();
+            return sealedObject.getObject(cipher);
+        } catch (ClassNotFoundException | IllegalBlockSizeException | BadPaddingException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    public static boolean checkForMatch(Hand hand){
+        return BiometricAuthentication.HandList.contains(hand);
+    }
 }
