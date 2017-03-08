@@ -152,7 +152,7 @@ public class AuthenticationUi extends javax.swing.JFrame {
         lblHand.setMinimumSize(new java.awt.Dimension(408, 513));
         lblHand.setPreferredSize(new java.awt.Dimension(408, 513));
         getContentPane().add(lblHand);
-        lblHand.setBounds(20, 60, 530, 500);
+        lblHand.setBounds(20, 60, 410, 500);
 
         BtnInsert.setText("Insert");
         BtnInsert.addActionListener(new java.awt.event.ActionListener() {

@@ -5,6 +5,7 @@
  */
 package biometricauthentication;
 
+import java.io.File;
 import java.util.ArrayList;
 import javax.swing.UIManager;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
@@ -24,8 +25,13 @@ public class BiometricAuthentication {
 
         try {
             UIManager.setLookAndFeel(new NimbusLookAndFeel());
-            //  Get the data
-            HandList = (ArrayList<Hand>) SecurityHandler.decrypt();
+
+            // if only the file is existing get the data
+            File f = new File("src/SerializedObjects/handList.ser");
+            if (f.exists() && !f.isDirectory()) {
+                //  Get the data
+                HandList = (ArrayList<Hand>) SecurityHandler.decrypt();
+            }
 
         } catch (Exception ex) {
             ex.printStackTrace();
