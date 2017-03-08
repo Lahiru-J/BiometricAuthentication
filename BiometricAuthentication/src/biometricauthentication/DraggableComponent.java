@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package biometricauthentication;
 
 import java.awt.Color;
@@ -21,19 +16,11 @@ import javax.swing.JComponent;
 public class DraggableComponent extends JComponent {
 
     private boolean draggable = true;
-    /**
-     * 2D Point representing the coordinate where mouse is, relative parent
-     * container
-     */
+    // 2D Point representing the coordinate where mouse is
     protected Point anchorPoint;
-    /**
-     * Default mouse cursor for dragging action
-     */
+    // Default mouse cursor for dragging action
     protected Cursor draggingCursor = Cursor.getPredefinedCursor(Cursor.HAND_CURSOR);
-    /**
-     * If sets <b>TRUE</b> when dragging component, it will be painted over each
-     * other (z-Buffer change)
-     */
+    //If sets TRUE when dragging component, it will be painted over each other (z-Buffer change)
     protected boolean overbearing = false;
 
     public DraggableComponent() {
@@ -46,10 +33,7 @@ public class DraggableComponent extends JComponent {
      * Add Mouse Motion Listener with drag function
      */
     private void addDragListeners() {
-        /**
-         * This handle is a reference to THIS because in next Mouse Adapter
-         * "this" is not allowed
-         */
+        
         final DraggableComponent handle = this;
         addMouseMotionListener(new MouseAdapter() {
 
@@ -70,7 +54,6 @@ public class DraggableComponent extends JComponent {
                         - anchorX, mouseOnScreen.y - parentOnScreen.y - anchorY);
                 setLocation(position);
 
-                //Change Z-Buffer if it is "overbearing"
                 if (overbearing) {
                     getParent().setComponentZOrder(handle, 0);
                     repaint();

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package biometricauthentication;
 
 import java.io.FileInputStream;
@@ -31,7 +26,7 @@ import javax.crypto.spec.SecretKeySpec;
 public class SecurityHandler {
 
     private static double MARGIN = 0.1;
-    private static final byte[] key = "MyDifficultPassw".getBytes();
+    private static final byte[] key = "140262pLahiruJsw".getBytes();
     ;
     private static final String transformation = "Blowfish";
 
