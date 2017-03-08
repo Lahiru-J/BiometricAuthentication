@@ -6,13 +6,9 @@
 package biometricauthentication;
 
 import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
@@ -24,11 +20,11 @@ import javax.swing.border.LineBorder;
  */
 public class AuthenticationUi extends javax.swing.JFrame {
 
+    JComponent[] coms = new JComponent[10];
     public AuthenticationUi() {
         initComponents();
         fileSelect.setVisible(false);
 
-        JComponent[] coms = new JComponent[10];
         Color[] colors = {Color.BLACK, Color.BLUE, Color.CYAN, Color.DARK_GRAY, Color.GREEN,
             Color.MAGENTA, Color.ORANGE, Color.PINK, Color.RED, Color.YELLOW};
 
@@ -67,7 +63,8 @@ public class AuthenticationUi extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         TbtnSelectImage = new javax.swing.JToggleButton();
         lblHand = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        BtnInsert = new javax.swing.JButton();
+        BtnValidate = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(900, 600));
@@ -154,18 +151,26 @@ public class AuthenticationUi extends javax.swing.JFrame {
         lblHand.setMaximumSize(new java.awt.Dimension(408, 513));
         lblHand.setMinimumSize(new java.awt.Dimension(408, 513));
         lblHand.setPreferredSize(new java.awt.Dimension(408, 513));
-        lblHand.setSize(new java.awt.Dimension(408, 513));
         getContentPane().add(lblHand);
         lblHand.setBounds(20, 60, 530, 500);
 
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        BtnInsert.setText("Insert");
+        BtnInsert.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                BtnInsertActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1);
-        jButton1.setBounds(350, 10, 97, 29);
+        getContentPane().add(BtnInsert);
+        BtnInsert.setBounds(280, 10, 80, 29);
+
+        BtnValidate.setText("Validate");
+        BtnValidate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnValidateActionPerformed(evt);
+            }
+        });
+        getContentPane().add(BtnValidate);
+        BtnValidate.setBounds(380, 10, 94, 29);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -194,15 +199,17 @@ public class AuthenticationUi extends javax.swing.JFrame {
 
     }//GEN-LAST:event_fileSelectActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        try {
-            BufferedImage image = ImageIO.read(new File("src/images/large.png"));
-            BufferedImage resizedImage = ResizeImage.resize(image, 408, 513);
-            lblHand.setIcon(new ImageIcon(resizedImage));
-        } catch (IOException ex) {
-            Logger.getLogger(AuthenticationUi.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void BtnInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnInsertActionPerformed
+        Hand hand = getHand();
+        if (hand == null) return;
+        new HandHandler().insertHand(hand);
+    }//GEN-LAST:event_BtnInsertActionPerformed
+
+    private void BtnValidateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnValidateActionPerformed
+        Hand hand = getHand();
+        if (hand == null) return;
+        SecurityHandler.checkForMatch(hand);
+    }//GEN-LAST:event_BtnValidateActionPerformed
 
     /**
      * @param args the command line arguments
@@ -240,9 +247,10 @@ public class AuthenticationUi extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BtnInsert;
+    private javax.swing.JButton BtnValidate;
     private javax.swing.JToggleButton TbtnSelectImage;
     private javax.swing.JFileChooser fileSelect;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel12;
@@ -259,4 +267,21 @@ public class AuthenticationUi extends javax.swing.JFrame {
     private javax.swing.JLabel lblHand;
     // End of variables declaration//GEN-END:variables
 
+    private Hand getHand(){
+        double[] fingerlen =  new double[10];
+        for(int i = 0 ; i < 5; i++){
+            fingerlen[i] = Math.sqrt(Math.pow((coms[i].getX()-coms[i+1].getX()), 2) 
+                + Math.pow((coms[i].getY()-coms[i+1].getY()), 2));
+        }
+        // if there is no finger measurement
+        if(fingerlen[0] == 0) return null;
+        
+        // make the little finger to be unit 1 and the rest of the fingers to be
+        // product of the little finger
+        double lf = fingerlen[0];
+        for(int i = 0; i<5 ; i++){
+            fingerlen[i] = fingerlen[i]/lf;
+        }
+        return new Hand(fingerlen[0], fingerlen[1], fingerlen[2], fingerlen[3], fingerlen[4]);
+    }
 }

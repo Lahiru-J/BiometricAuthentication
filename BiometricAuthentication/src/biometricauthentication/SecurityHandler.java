@@ -27,7 +27,7 @@ import javax.crypto.spec.SecretKeySpec;
  *
  * @author Lahiru
  */
-public class Security {
+public class SecurityHandler {
 
     private static int MARGIN = 1;
     private static final byte[] key = "MyDifficultPassw".getBytes();

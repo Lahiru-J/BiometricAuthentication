@@ -25,7 +25,7 @@ public class BiometricAuthentication {
         try {
             UIManager.setLookAndFeel(new NimbusLookAndFeel());
             //  Get the data
-            HandList = (ArrayList<Hand>) Security.decrypt();
+            HandList = (ArrayList<Hand>) SecurityHandler.decrypt();
 
         } catch (Exception ex) {
             ex.printStackTrace();
