@@ -18,28 +18,38 @@ import javax.swing.JComponent;
  *
  * @author Lahiru
  */
-public class DraggableComponent extends JComponent{
+public class DraggableComponent extends JComponent {
+
     private boolean draggable = true;
-    /** 2D Point representing the coordinate where mouse is, relative parent container */
+    /**
+     * 2D Point representing the coordinate where mouse is, relative parent
+     * container
+     */
     protected Point anchorPoint;
-    /** Default mouse cursor for dragging action */
+    /**
+     * Default mouse cursor for dragging action
+     */
     protected Cursor draggingCursor = Cursor.getPredefinedCursor(Cursor.HAND_CURSOR);
-    /** If sets <b>TRUE</b> when dragging component, 
-    it will be painted over each other (z-Buffer change) */
+    /**
+     * If sets <b>TRUE</b> when dragging component, it will be painted over each
+     * other (z-Buffer change)
+     */
     protected boolean overbearing = false;
 
     public DraggableComponent() {
         addDragListeners();
         setOpaque(true);
-        setBackground(new Color(240,240,240));
+        setBackground(new Color(240, 240, 240));
     }
-    
+
     /**
      * Add Mouse Motion Listener with drag function
      */
     private void addDragListeners() {
-        /** This handle is a reference to THIS because in next Mouse Adapter 
-	"this" is not allowed */
+        /**
+         * This handle is a reference to THIS because in next Mouse Adapter
+         * "this" is not allowed
+         */
         final DraggableComponent handle = this;
         addMouseMotionListener(new MouseAdapter() {
 
@@ -56,8 +66,8 @@ public class DraggableComponent extends JComponent{
 
                 Point parentOnScreen = getParent().getLocationOnScreen();
                 Point mouseOnScreen = e.getLocationOnScreen();
-                Point position = new Point(mouseOnScreen.x - parentOnScreen.x - 
-		anchorX, mouseOnScreen.y - parentOnScreen.y - anchorY);
+                Point position = new Point(mouseOnScreen.x - parentOnScreen.x
+                        - anchorX, mouseOnScreen.y - parentOnScreen.y - anchorY);
                 setLocation(position);
 
                 //Change Z-Buffer if it is "overbearing"
@@ -68,20 +78,20 @@ public class DraggableComponent extends JComponent{
             }
         });
     }
-    
+
     @Override
-   protected void paintComponent(Graphics g) {
-       super.paintComponent(g);
-       if (isOpaque()) {
-           g.setColor(getBackground());
-           g.fillRect(0, 0, getWidth(), getHeight());
-       }
-   }
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        if (isOpaque()) {
+            g.setColor(getBackground());
+            g.fillRect(0, 0, getWidth(), getHeight());
+        }
+    }
 
     private void removeDragListeners() {
-       for (MouseMotionListener listener : this.getMouseMotionListeners()) {
-           removeMouseMotionListener(listener);
-       }
-       setCursor(Cursor.getDefaultCursor());
-   }
+        for (MouseMotionListener listener : this.getMouseMotionListeners()) {
+            removeMouseMotionListener(listener);
+        }
+        setCursor(Cursor.getDefaultCursor());
+    }
 }

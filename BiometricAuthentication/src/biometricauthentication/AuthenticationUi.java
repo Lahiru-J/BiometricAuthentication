@@ -6,10 +6,13 @@
 package biometricauthentication;
 
 import java.awt.Color;
-import java.awt.Image;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
@@ -20,25 +23,23 @@ import javax.swing.border.LineBorder;
  * @author Lahiru
  */
 public class AuthenticationUi extends javax.swing.JFrame {
-    /**
-     * Creates new form AuthenticationUi
-     */
+
     public AuthenticationUi() {
         initComponents();
         fileSelect.setVisible(false);
+
         JComponent[] coms = new JComponent[10];
-        Color[] colors = {Color.BLACK,Color.BLUE,Color.CYAN,Color.DARK_GRAY,Color.GREEN,
-            Color.MAGENTA,Color.ORANGE,Color.PINK,Color.RED,Color.YELLOW};
-        
-        for(int i = 0 ; i<10 ; i++){
+        Color[] colors = {Color.BLACK, Color.BLUE, Color.CYAN, Color.DARK_GRAY, Color.GREEN,
+            Color.MAGENTA, Color.ORANGE, Color.PINK, Color.RED, Color.YELLOW};
+
+        for (int i = 0; i < 10; i++) {
             JComponent com = new DraggableComponent();
             com.setBorder(new LineBorder(Color.white));
             com.setSize(20, 20);
             com.setBackground(colors[i]);
-            com.setLocation(i+20*i,0);
-            this.add(com,10);
+            com.setLocation(i + 20 * i, 0);
+            this.add(com, 10);
         }
-
     }
 
     /**
@@ -139,7 +140,7 @@ public class AuthenticationUi extends javax.swing.JFrame {
 
         jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/hand.png"))); // NOI18N
         getContentPane().add(jLabel12);
-        jLabel12.setBounds(660, 40, 408, 513);
+        jLabel12.setBounds(670, 60, 408, 513);
 
         TbtnSelectImage.setText("Select Image");
         TbtnSelectImage.addActionListener(new java.awt.event.ActionListener() {
@@ -165,48 +166,38 @@ public class AuthenticationUi extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void TbtnSelectImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TbtnSelectImageActionPerformed
-    if(TbtnSelectImage.isSelected() == true){
-        fileSelect.setVisible(true);
-    }else{
-        fileSelect.setVisible(false);
-    }
+        if (TbtnSelectImage.isSelected() == true) {
+            fileSelect.setVisible(true);
+        } else {
+            fileSelect.setVisible(false);
+        }
     }//GEN-LAST:event_TbtnSelectImageActionPerformed
 
     private void fileSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fileSelectActionPerformed
-      
+
         File file = fileSelect.getSelectedFile();
-        if(file != null){
-//            try {
-//                BufferedImage img = ImageIO.read(file);
-//                BufferedImage dimg = (BufferedImage) img.getScaledInstance(lblHand.WIDTH, lblHand.HEIGHT,
-//        Image.SCALE_SMOOTH);
-//            lblHand.setIcon(new ImageIcon(dimg));
-//            } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-     try {
-                lblHand.setIcon(new ImageIcon(ImageIO.read(file)));
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (file != null) {
+
+            try {
+                BufferedImage image = ImageIO.read(file);
+                BufferedImage resizedImage = ResizeImage.resize(image, 100, 100);
+                lblHand.setIcon(new ImageIcon(resizedImage));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
         }
-           
-        }
-               
+
     }//GEN-LAST:event_fileSelectActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       BufferedImage img = null;
         try {
-            img = ImageIO.read(new File("src/images/hand.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
+            BufferedImage image = ImageIO.read(new File("src/images/large.png"));
+            BufferedImage resizedImage = ResizeImage.resize(image, 600, 510);
+            lblHand.setIcon(new ImageIcon(resizedImage));
+        } catch (IOException ex) {
+            Logger.getLogger(AuthenticationUi.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        Image dimg = img.getScaledInstance(lblHand.WIDTH, lblHand.HEIGHT,
-        Image.SCALE_SMOOTH);
-        
-        ImageIcon imageIcon = new ImageIcon(dimg);
-        lblHand.setIcon(imageIcon);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -263,4 +254,5 @@ public class AuthenticationUi extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JLabel lblHand;
     // End of variables declaration//GEN-END:variables
+
 }

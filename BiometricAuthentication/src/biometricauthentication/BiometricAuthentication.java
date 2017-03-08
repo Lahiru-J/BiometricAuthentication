@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import javax.swing.UIManager;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
-
 /**
  *
  * @author Lahiru
@@ -17,12 +16,13 @@ import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 public class BiometricAuthentication {
 
     public static ArrayList<Hand> HandList = new ArrayList<>();
+
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        
-         try {
+
+        try {
             UIManager.setLookAndFeel(new NimbusLookAndFeel());
             //  Get the data
             HandList = (ArrayList<Hand>) Security.decrypt();
@@ -34,5 +34,5 @@ public class BiometricAuthentication {
         new AuthenticationUi().setVisible(true);
 
     }
-    
+
 }

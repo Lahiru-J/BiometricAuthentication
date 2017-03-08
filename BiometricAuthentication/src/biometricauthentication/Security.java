@@ -29,16 +29,16 @@ import javax.crypto.spec.SecretKeySpec;
  * @author Lahiru
  */
 public class Security {
-    
+
     private static int MARGIN = 1;
-    private static final byte[] key = "MyDifficultPassw".getBytes();;
+    private static final byte[] key = "MyDifficultPassw".getBytes();
+    ;
     private static final String transformation = "Blowfish";
 
-    public static void encrypt(Serializable object) 
-            throws IOException, NoSuchAlgorithmException, NoSuchPaddingException, 
+    public static void encrypt(Serializable object)
+            throws IOException, NoSuchAlgorithmException, NoSuchPaddingException,
             InvalidKeyException, IllegalBlockSizeException {
-        
-        
+
         try {
             // Length is 16 byte
             SecretKeySpec sks = new SecretKeySpec(key, transformation);
@@ -49,10 +49,10 @@ public class Security {
             SealedObject sealedObject = new SealedObject(object, cipher);
 
             // Wrap the output stream
-            CipherOutputStream cos = 
-                    new CipherOutputStream(new ObjectOutputStream(
-                            new FileOutputStream("src/SerializedObjects/handList.ser")), cipher);
-            
+            CipherOutputStream cos
+                    = new CipherOutputStream(new ObjectOutputStream(
+                                    new FileOutputStream("src/SerializedObjects/handList.ser")), cipher);
+
             ObjectOutputStream outputStream = new ObjectOutputStream(cos);
             outputStream.writeObject(sealedObject);
             outputStream.close();
@@ -61,16 +61,16 @@ public class Security {
         }
     }
 
-    public static Object decrypt() 
-            throws IOException, NoSuchAlgorithmException, NoSuchPaddingException, 
+    public static Object decrypt()
+            throws IOException, NoSuchAlgorithmException, NoSuchPaddingException,
             InvalidKeyException, BadPaddingException {
 
         SecretKeySpec sks = new SecretKeySpec(key, transformation);
         Cipher cipher = Cipher.getInstance(transformation);
         cipher.init(Cipher.DECRYPT_MODE, sks);
 
-        CipherInputStream cipherInputStream = 
-                new CipherInputStream(new ObjectInputStream(new FileInputStream("src/SerializedObjects/handList.ser")), cipher);
+        CipherInputStream cipherInputStream
+                = new CipherInputStream(new ObjectInputStream(new FileInputStream("src/SerializedObjects/handList.ser")), cipher);
         ObjectInputStream inputStream = new ObjectInputStream(cipherInputStream);
         SealedObject sealedObject;
 
@@ -82,31 +82,29 @@ public class Security {
             return null;
         }
     }
-    
-    public static boolean checkForMatch(Hand hand){
-        for (Iterator<Hand> iterator = 
-                BiometricAuthentication.HandList.iterator(); iterator.hasNext();) {
+
+    public static boolean checkForMatch(Hand hand) {
+        for (Iterator<Hand> iterator
+                = BiometricAuthentication.HandList.iterator(); iterator.hasNext();) {
             Hand storedHand = iterator.next();
-            
+
             double slf = storedHand.getLittleFingerLen();
             double srf = storedHand.getRingFingerLen();
             double smf = storedHand.getMiddleFingerLen();
             double sinf = storedHand.getIndexFingerLen();
             double stf = storedHand.getThumbFingerLen();
-            
+
             double lf = hand.getLittleFingerLen();
             double rf = hand.getRingFingerLen();
             double mf = hand.getMiddleFingerLen();
             double inf = hand.getIndexFingerLen();
             double tf = hand.getThumbFingerLen();
-            
-            if(
-                (lf >= slf-MARGIN && lf <= slf+MARGIN)
-                && (rf >= srf-MARGIN && rf <= srf+MARGIN)
-                && (mf >= smf-MARGIN && mf <= smf+MARGIN)
-                && (inf >= sinf-MARGIN && inf <= sinf+MARGIN)
-                && (tf >= stf-MARGIN && tf <= stf+MARGIN) 
-                    ){
+
+            if ((lf >= slf - MARGIN && lf <= slf + MARGIN)
+                    && (rf >= srf - MARGIN && rf <= srf + MARGIN)
+                    && (mf >= smf - MARGIN && mf <= smf + MARGIN)
+                    && (inf >= sinf - MARGIN && inf <= sinf + MARGIN)
+                    && (tf >= stf - MARGIN && tf <= stf + MARGIN)) {
                 return true;
             }
         }
