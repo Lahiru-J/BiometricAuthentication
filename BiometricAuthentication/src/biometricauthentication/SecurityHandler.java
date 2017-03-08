@@ -30,8 +30,8 @@ import javax.crypto.spec.SecretKeySpec;
  */
 public class SecurityHandler {
 
-    private static int MARGIN = 1;
-    private static final byte[] key = "140262P_LahiruJayathilake".getBytes();
+    private static double MARGIN = 0.1;
+    private static final byte[] key = "MyDifficultPassw".getBytes();
     ;
     private static final String transformation = "Blowfish";
 
