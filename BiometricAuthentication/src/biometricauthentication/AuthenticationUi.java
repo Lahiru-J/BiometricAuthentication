@@ -79,7 +79,7 @@ public class AuthenticationUi extends javax.swing.JFrame {
             }
         });
         getContentPane().add(fileSelect);
-        fileSelect.setBounds(530, 40, 470, 360);
+        fileSelect.setBounds(470, 40, 470, 360);
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("L1");
@@ -131,7 +131,7 @@ public class AuthenticationUi extends javax.swing.JFrame {
         jSeparator2.setForeground(new java.awt.Color(102, 102, 102));
         jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
         getContentPane().add(jSeparator2);
-        jSeparator2.setBounds(640, 50, 10, 520);
+        jSeparator2.setBounds(470, 60, 10, 520);
 
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel10.setText("T2");
@@ -140,7 +140,7 @@ public class AuthenticationUi extends javax.swing.JFrame {
 
         jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/hand.png"))); // NOI18N
         getContentPane().add(jLabel12);
-        jLabel12.setBounds(670, 60, 408, 513);
+        jLabel12.setBounds(510, 60, 408, 513);
 
         TbtnSelectImage.setText("Select Image");
         TbtnSelectImage.addActionListener(new java.awt.event.ActionListener() {
@@ -150,8 +150,13 @@ public class AuthenticationUi extends javax.swing.JFrame {
         });
         getContentPane().add(TbtnSelectImage);
         TbtnSelectImage.setBounds(520, 10, 123, 29);
+
+        lblHand.setMaximumSize(new java.awt.Dimension(408, 513));
+        lblHand.setMinimumSize(new java.awt.Dimension(408, 513));
+        lblHand.setPreferredSize(new java.awt.Dimension(408, 513));
+        lblHand.setSize(new java.awt.Dimension(408, 513));
         getContentPane().add(lblHand);
-        lblHand.setBounds(10, 60, 620, 510);
+        lblHand.setBounds(20, 60, 530, 500);
 
         jButton1.setText("jButton1");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -180,12 +185,11 @@ public class AuthenticationUi extends javax.swing.JFrame {
 
             try {
                 BufferedImage image = ImageIO.read(file);
-                BufferedImage resizedImage = ResizeImage.resize(image, 100, 100);
+                BufferedImage resizedImage = ResizeImage.resize(image, 408, 513);
                 lblHand.setIcon(new ImageIcon(resizedImage));
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
         }
 
     }//GEN-LAST:event_fileSelectActionPerformed

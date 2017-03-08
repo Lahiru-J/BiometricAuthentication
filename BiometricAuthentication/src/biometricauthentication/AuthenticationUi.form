@@ -34,7 +34,7 @@
       </Events>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="530" y="40" width="470" height="360"/>
+          <AbsoluteConstraints x="470" y="40" width="470" height="360"/>
         </Constraint>
       </Constraints>
     </Component>
@@ -153,7 +153,7 @@
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="640" y="50" width="10" height="520"/>
+          <AbsoluteConstraints x="470" y="60" width="10" height="520"/>
         </Constraint>
       </Constraints>
     </Component>
@@ -176,7 +176,7 @@
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="670" y="60" width="-1" height="-1"/>
+          <AbsoluteConstraints x="510" y="60" width="-1" height="-1"/>
         </Constraint>
       </Constraints>
     </Component>
@@ -194,9 +194,23 @@
       </Constraints>
     </Component>
     <Component class="javax.swing.JLabel" name="lblHand">
+      <Properties>
+        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[408, 513]"/>
+        </Property>
+        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[408, 513]"/>
+        </Property>
+        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[408, 513]"/>
+        </Property>
+        <Property name="size" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[408, 513]"/>
+        </Property>
+      </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="10" y="60" width="620" height="510"/>
+          <AbsoluteConstraints x="20" y="60" width="530" height="500"/>
         </Constraint>
       </Constraints>
     </Component>
