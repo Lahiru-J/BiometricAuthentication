@@ -197,7 +197,7 @@ public class AuthenticationUi extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
             BufferedImage image = ImageIO.read(new File("src/images/large.png"));
-            BufferedImage resizedImage = ResizeImage.resize(image, 600, 510);
+            BufferedImage resizedImage = ResizeImage.resize(image, 408, 513);
             lblHand.setIcon(new ImageIcon(resizedImage));
         } catch (IOException ex) {
             Logger.getLogger(AuthenticationUi.class.getName()).log(Level.SEVERE, null, ex);

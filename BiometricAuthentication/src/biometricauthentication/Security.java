@@ -5,7 +5,6 @@
  */
 package biometricauthentication;
 
-import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
