@@ -19,7 +19,6 @@ import javax.swing.JComponent;
  * @author Lahiru
  */
 public class DraggableComponent extends JComponent{
-      /** If sets <b>TRUE</b> this component is dragable */
     private boolean draggable = true;
     /** 2D Point representing the coordinate where mouse is, relative parent container */
     protected Point anchorPoint;
@@ -79,7 +78,7 @@ public class DraggableComponent extends JComponent{
        }
    }
 
-private void removeDragListeners() {
+    private void removeDragListeners() {
        for (MouseMotionListener listener : this.getMouseMotionListeners()) {
            removeMouseMotionListener(listener);
        }

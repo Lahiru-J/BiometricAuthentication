@@ -5,13 +5,8 @@
  */
 package biometricauthentication;
 
-import java.awt.Color;
-import java.io.IOException;
 import java.util.ArrayList;
-import javax.swing.JComponent;
-import javax.swing.JFrame;
 import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
 
@@ -37,19 +32,7 @@ public class BiometricAuthentication {
         }
 
         new AuthenticationUi().setVisible(true);
-//         JComponent com = new DraggableComponent();
-//                  JComponent com1 = new DraggableComponent();
-//
-//com.setSize(10,10);
-//com.setBackground(Color.red);
-//com1.setBackground(Color.black);
-//
-//    JFrame f = new JFrame();
-//
-//    f.add(com);
-//    f.add(com1);
-//    f.setSize(300, 300);
-//    f.setVisible(true);
+
     }
     
 }
