@@ -24,7 +24,8 @@ import javax.swing.border.LineBorder;
 public class AuthenticationUi extends javax.swing.JFrame {
 
     JComponent[] coms = new JComponent[12];
-private boolean isImageSelected = false;
+    private boolean isImageSelected = false;
+
     public AuthenticationUi() {
         initComponents();
         fileSelect.setVisible(false);
@@ -252,15 +253,20 @@ private boolean isImageSelected = false;
 
     private void BtnInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnInsertActionPerformed
         if (isImageSelected) {
-            Hand hand = new HandHandler().getHand(coms);
-            if (hand == null) {
-                JOptionPane.showMessageDialog(this, "Mark the points as shown in the image", "Error",
-                        JOptionPane.ERROR_MESSAGE);
-                return;
+            if (validatePoints()) {
+                Hand hand = new HandHandler().getHand(coms);
+                if (hand == null) {
+                    JOptionPane.showMessageDialog(this, "Mark the points as shown in the image", "Error",
+                            JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                new SignupPage(hand, this, true).setVisible(true);
+
+            } else {
+                JOptionPane.showMessageDialog(this, "Points should be within the image", "Error", JOptionPane.ERROR_MESSAGE);
+
             }
-
-            new SignupPage(hand, this, true).setVisible(true);
-
         } else {
             JOptionPane.showMessageDialog(this, "Select Image!", "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -268,28 +274,33 @@ private boolean isImageSelected = false;
     }//GEN-LAST:event_BtnInsertActionPerformed
 
     private void BtnValidateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnValidateActionPerformed
-      if (!txtUname.getText().isEmpty()) {
-            Hand hand = new HandHandler().getHand(coms);
-            if (hand == null) {
-                return;
-            }
-            hand.setUserId(txtUname.getText());
-            boolean b = SecurityHandler.checkForMatch(hand);
-            if (b) {
-                JOptionPane.showMessageDialog(this, "Permission Granted", "Succesfull",
-                        JOptionPane.INFORMATION_MESSAGE);
+        if (!txtUname.getText().isEmpty()) {
+            if (validatePoints()) {
+                Hand hand = new HandHandler().getHand(coms);
+                if (hand == null) {
+                    return;
+                }
+                hand.setUserId(txtUname.getText());
+                boolean b = SecurityHandler.checkForMatch(hand);
+                if (b) {
+                    JOptionPane.showMessageDialog(this, "Permission Granted", "Succesfull",
+                            JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(this, "No matched hand is found!", "Invalid",
+                            JOptionPane.ERROR_MESSAGE);
+                }
             } else {
-                JOptionPane.showMessageDialog(this, "No matched hand is found!", "Invalid",
-                        JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Points should be within the image", "Error", JOptionPane.ERROR_MESSAGE);
+
             }
-        }else{
+        } else {
             JOptionPane.showMessageDialog(this, "User name cannot be empty", "Error",
-                        JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_BtnValidateActionPerformed
 
     private void txtUnameKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUnameKeyTyped
-       if (evt.getKeyCode() == KeyEvent.VK_SPACE) {
+        if (evt.getKeyCode() == KeyEvent.VK_SPACE) {
             // do not allow to enter space
             evt.consume();
         }
@@ -358,5 +369,19 @@ private boolean isImageSelected = false;
     private javax.swing.JTextField txtUname;
     // End of variables declaration//GEN-END:variables
 
+    private boolean validatePoints() {
+        int x1 = 19;
+        int x2 = 414;
+        int y1 = 84;
+        int y2 = 568;
 
+        for (JComponent com : coms) {
+
+            if (com.getX() < x1 || com.getX() > x2 || com.getY() < y1 || com.getY() > y2) {
+                return false;
+            }
+        }
+        return true;
+
+    }
 }

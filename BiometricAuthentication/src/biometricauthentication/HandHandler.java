@@ -73,4 +73,5 @@ public class HandHandler {
         return new Hand(fingerlen[0], fingerlen[1], fingerlen[2], fingerlen[3],
                 fingerlen[4],fingerlen[5]);
     }
+    
 }
