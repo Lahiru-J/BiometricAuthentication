@@ -55,8 +55,8 @@ public class HandHandler {
         double[] fingerlen = new double[6];
         DecimalFormat numberFormat = new DecimalFormat("#.00");
         for (int i = 0; i < 6; i++) {
-            fingerlen[i] = Math.sqrt(Math.pow((coms[i].getX() - coms[i + 1].getX()), 2)
-                    + Math.pow((coms[i].getY() - coms[i + 1].getY()), 2));
+            fingerlen[i] = Math.sqrt(Math.pow((coms[i*2].getX() - coms[i*2 + 1].getX()), 2)
+                    + Math.pow((coms[i*2].getY() - coms[i*2 + 1].getY()), 2));
         }
         // if there is no finger measurement
         if (fingerlen[0] == 0) {
@@ -70,6 +70,7 @@ public class HandHandler {
             fingerlen[i] = fingerlen[i] / lf;
             fingerlen[i] = Double.parseDouble(numberFormat.format(fingerlen[i]));
         }
-        return new Hand(fingerlen[0], fingerlen[1], fingerlen[2], fingerlen[3], fingerlen[4],fingerlen[5]);
+        return new Hand(fingerlen[0], fingerlen[1], fingerlen[2], fingerlen[3],
+                fingerlen[4],fingerlen[5]);
     }
 }

@@ -20,7 +20,7 @@ public class DraggableComponent extends JComponent {
     protected Point anchorPoint;
     // Default mouse cursor for dragging action
     protected Cursor draggingCursor = Cursor.getPredefinedCursor(Cursor.HAND_CURSOR);
-    //If sets TRUE when dragging component, it will be painted over each other (z-Buffer change)
+    //If sets TRUE when dragging component
     protected boolean overbearing = false;
 
     public DraggableComponent() {

@@ -100,9 +100,6 @@ public class SignupPage extends javax.swing.JDialog {
                         JOptionPane.INFORMATION_MESSAGE);
                 // close the window
                 dispose();
-            } else {
-                JOptionPane.showMessageDialog(this, "Error!", "Error",
-                        JOptionPane.ERROR_MESSAGE);
             }
         }
     }//GEN-LAST:event_BtnCreateActionPerformed

@@ -10,7 +10,6 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.text.DecimalFormat;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
@@ -79,9 +78,12 @@ private boolean isImageSelected = false;
         jLabel11 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMinimumSize(new java.awt.Dimension(900, 600));
+        setMinimumSize(new java.awt.Dimension(960, 700));
+        setSize(new java.awt.Dimension(960, 700));
         getContentPane().setLayout(null);
 
         fileSelect.addActionListener(new java.awt.event.ActionListener() {
@@ -142,7 +144,7 @@ private boolean isImageSelected = false;
         jSeparator2.setForeground(new java.awt.Color(102, 102, 102));
         jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
         getContentPane().add(jSeparator2);
-        jSeparator2.setBounds(470, 60, 10, 520);
+        jSeparator2.setBounds(450, 60, 10, 520);
 
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel10.setText("10");
@@ -151,7 +153,7 @@ private boolean isImageSelected = false;
 
         jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/hand2.png"))); // NOI18N
         getContentPane().add(jLabel12);
-        jLabel12.setBounds(510, 60, 408, 513);
+        jLabel12.setBounds(480, 85, 408, 513);
 
         TbtnSelectImage.setText("Select Image");
         TbtnSelectImage.addActionListener(new java.awt.event.ActionListener() {
@@ -160,13 +162,14 @@ private boolean isImageSelected = false;
             }
         });
         getContentPane().add(TbtnSelectImage);
-        TbtnSelectImage.setBounds(520, 10, 123, 29);
+        TbtnSelectImage.setBounds(450, 10, 123, 29);
 
+        lblHand.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         lblHand.setMaximumSize(new java.awt.Dimension(408, 513));
         lblHand.setMinimumSize(new java.awt.Dimension(408, 513));
         lblHand.setPreferredSize(new java.awt.Dimension(408, 513));
         getContentPane().add(lblHand);
-        lblHand.setBounds(20, 60, 410, 500);
+        lblHand.setBounds(20, 85, 410, 500);
 
         BtnInsert.setText("Sign Up");
         BtnInsert.addActionListener(new java.awt.event.ActionListener() {
@@ -175,7 +178,7 @@ private boolean isImageSelected = false;
             }
         });
         getContentPane().add(BtnInsert);
-        BtnInsert.setBounds(280, 10, 92, 29);
+        BtnInsert.setBounds(360, 10, 92, 29);
 
         BtnValidate.setText("Validate");
         BtnValidate.addActionListener(new java.awt.event.ActionListener() {
@@ -184,7 +187,7 @@ private boolean isImageSelected = false;
             }
         });
         getContentPane().add(BtnValidate);
-        BtnValidate.setBounds(370, 590, 94, 29);
+        BtnValidate.setBounds(350, 595, 94, 29);
 
         txtUname.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
@@ -192,11 +195,11 @@ private boolean isImageSelected = false;
             }
         });
         getContentPane().add(txtUname);
-        txtUname.setBounds(240, 590, 130, 26);
+        txtUname.setBounds(220, 595, 130, 26);
 
         jLabel11.setText("User Name");
         getContentPane().add(jLabel11);
-        jLabel11.setBounds(140, 595, 80, 16);
+        jLabel11.setBounds(140, 600, 80, 16);
 
         jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel13.setText("11");
@@ -207,6 +210,16 @@ private boolean isImageSelected = false;
         jLabel14.setText("12");
         getContentPane().add(jLabel14);
         jLabel14.setBounds(234, 22, 20, 16);
+
+        jLabel15.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel15.setText("Place the points in the selected image as shown in the sample image");
+        getContentPane().add(jLabel15);
+        jLabel15.setBounds(10, 50, 440, 16);
+
+        jLabel16.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel16.setText("Sample Image");
+        getContentPane().add(jLabel16);
+        jLabel16.setBounds(600, 50, 100, 16);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -329,6 +342,8 @@ private boolean isImageSelected = false;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
