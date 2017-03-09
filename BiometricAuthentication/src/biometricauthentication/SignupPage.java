@@ -19,7 +19,7 @@ public class SignupPage extends javax.swing.JDialog {
     public SignupPage(Hand hand, java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        this.hand = hand;
+        SignupPage.hand = hand;
     }
 
     /**
@@ -93,6 +93,7 @@ public class SignupPage extends javax.swing.JDialog {
 
     private void BtnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCreateActionPerformed
         if (!txtUname.getText().isEmpty()) {
+            hand.setUserId(txtUname.getText());
             boolean b = new HandHandler().insertHand(hand);
             if (b) {
                 JOptionPane.showMessageDialog(this, "Signup completed", "Succesful",

@@ -80,40 +80,34 @@ public class SecurityHandler {
 
     public static boolean checkForMatch(Hand hand) {
 
-        // if there are more hands that are within the threashould value
-        ArrayList<Hand> matchingHands = new ArrayList<>();
-        
         double lf = hand.getLittleFingerLen();
         double rf = hand.getRingFingerLen();
         double mf = hand.getMiddleFingerLen();
         double inf = hand.getIndexFingerLen();
         double tf = hand.getThumbFingerLen();
-        
+
         for (Iterator<Hand> iterator
                 = BiometricAuthentication.HandList.iterator(); iterator.hasNext();) {
             Hand storedHand = iterator.next();
 
-            double slf = storedHand.getLittleFingerLen();
-            double srf = storedHand.getRingFingerLen();
-            double smf = storedHand.getMiddleFingerLen();
-            double sinf = storedHand.getIndexFingerLen();
-            double stf = storedHand.getThumbFingerLen();
+            if (hand.getUserId().equals(storedHand.getUserId())) {
+                
+                double slf = storedHand.getLittleFingerLen();
+                double srf = storedHand.getRingFingerLen();
+                double smf = storedHand.getMiddleFingerLen();
+                double sinf = storedHand.getIndexFingerLen();
+                double stf = storedHand.getThumbFingerLen();
 
-            if ((lf >= slf - MARGIN && lf <= slf + MARGIN)
-                    && (rf >= srf - MARGIN && rf <= srf + MARGIN)
-                    && (mf >= smf - MARGIN && mf <= smf + MARGIN)
-                    && (inf >= sinf - MARGIN && inf <= sinf + MARGIN)
-                    && (tf >= stf - MARGIN && tf <= stf + MARGIN)) {
-
-                matchingHands.add(hand);
+                if ((lf >= slf - MARGIN && lf <= slf + MARGIN)
+                        && (rf >= srf - MARGIN && rf <= srf + MARGIN)
+                        && (mf >= smf - MARGIN && mf <= smf + MARGIN)
+                        && (inf >= sinf - MARGIN && inf <= sinf + MARGIN)
+                        && (tf >= stf - MARGIN && tf <= stf + MARGIN)) {
+                    return true;
+                }
             }
         }
-        
-        if(matchingHands.isEmpty()){
-            return false;
-        }else if(matchingHands.size() == 1){
-            return true;
-        }
+
         return false;
     }
 }

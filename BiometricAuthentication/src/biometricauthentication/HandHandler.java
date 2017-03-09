@@ -1,7 +1,9 @@
 package biometricauthentication;
 
 import java.text.DecimalFormat;
+import java.util.Iterator;
 import javax.swing.JComponent;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -16,12 +18,26 @@ public class HandHandler {
             if (hand == null) {
                 return false;
             }
+
+            for (Iterator<Hand> iterator
+                    = BiometricAuthentication.HandList.iterator(); iterator.hasNext();) {
+                Hand storedHand = iterator.next();
+
+                if (hand.getUserId().equals(storedHand.getUserId())) {
+                    JOptionPane.showMessageDialog(null, "User Id is already exists!",
+                            "Error", JOptionPane.ERROR_MESSAGE);
+                    return false;
+                }
+            }
+
             // if either one of a finger is zero 
             if (hand.getIndexFingerLen() == 0
                     || hand.getRingFingerLen() == 0
                     || hand.getMiddleFingerLen() == 0
                     || hand.getIndexFingerLen() == 0
                     || hand.getThumbFingerLen() == 0) {
+                JOptionPane.showMessageDialog(null, "Finger length cannot be zero!",
+                        "Error", JOptionPane.ERROR_MESSAGE);
                 return false;
             }
             // Add to the list
