@@ -35,7 +35,8 @@ public class HandHandler {
                     || hand.getRingFingerLen() == 0
                     || hand.getMiddleFingerLen() == 0
                     || hand.getIndexFingerLen() == 0
-                    || hand.getThumbFingerLen() == 0) {
+                    || hand.getPalmLength1()== 0
+                    || hand.getPalmLength2()== 0) {
                 JOptionPane.showMessageDialog(null, "Finger length cannot be zero!",
                         "Error", JOptionPane.ERROR_MESSAGE);
                 return false;
@@ -51,7 +52,7 @@ public class HandHandler {
     }
 
     public Hand getHand(JComponent[] coms) {
-        double[] fingerlen = new double[5];
+        double[] fingerlen = new double[6];
         DecimalFormat numberFormat = new DecimalFormat("#.00");
         for (int i = 0; i < 5; i++) {
             fingerlen[i] = Math.sqrt(Math.pow((coms[i].getX() - coms[i + 1].getX()), 2)
@@ -69,6 +70,6 @@ public class HandHandler {
             fingerlen[i] = fingerlen[i] / lf;
             fingerlen[i] = Double.parseDouble(numberFormat.format(fingerlen[i]));
         }
-        return new Hand(fingerlen[0], fingerlen[1], fingerlen[2], fingerlen[3], fingerlen[4]);
+        return new Hand(fingerlen[0], fingerlen[1], fingerlen[2], fingerlen[3], fingerlen[4],fingerlen[5]);
     }
 }

@@ -8,7 +8,6 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
 import java.util.Iterator;
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -84,7 +83,8 @@ public class SecurityHandler {
         double rf = hand.getRingFingerLen();
         double mf = hand.getMiddleFingerLen();
         double inf = hand.getIndexFingerLen();
-        double tf = hand.getThumbFingerLen();
+        double pl1 = hand.getPalmLength1();
+        double pl2 = hand.getPalmLength2();
 
         for (Iterator<Hand> iterator
                 = BiometricAuthentication.HandList.iterator(); iterator.hasNext();) {
@@ -96,13 +96,15 @@ public class SecurityHandler {
                 double srf = storedHand.getRingFingerLen();
                 double smf = storedHand.getMiddleFingerLen();
                 double sinf = storedHand.getIndexFingerLen();
-                double stf = storedHand.getThumbFingerLen();
+                double spl1 = storedHand.getPalmLength1();
+                double spl2 = storedHand.getPalmLength2();
 
                 if ((lf >= slf - MARGIN && lf <= slf + MARGIN)
                         && (rf >= srf - MARGIN && rf <= srf + MARGIN)
                         && (mf >= smf - MARGIN && mf <= smf + MARGIN)
                         && (inf >= sinf - MARGIN && inf <= sinf + MARGIN)
-                        && (tf >= stf - MARGIN && tf <= stf + MARGIN)) {
+                        && (pl1 >= spl1 - MARGIN && pl1 <= spl1 + MARGIN)
+                        && (pl2 >= spl2 - MARGIN && pl2 <= spl2 + MARGIN)) {
                     return true;
                 }
             }
