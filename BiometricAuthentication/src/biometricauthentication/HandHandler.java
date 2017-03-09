@@ -1,5 +1,8 @@
 package biometricauthentication;
 
+import java.text.DecimalFormat;
+import javax.swing.JComponent;
+
 /**
  *
  * @author Lahiru
@@ -29,5 +32,27 @@ public class HandHandler {
             ex.printStackTrace();
             return false;
         }
+    }
+
+    public Hand getHand(JComponent[] coms) {
+        double[] fingerlen = new double[5];
+        DecimalFormat numberFormat = new DecimalFormat("#.00");
+        for (int i = 0; i < 5; i++) {
+            fingerlen[i] = Math.sqrt(Math.pow((coms[i].getX() - coms[i + 1].getX()), 2)
+                    + Math.pow((coms[i].getY() - coms[i + 1].getY()), 2));
+        }
+        // if there is no finger measurement
+        if (fingerlen[0] == 0) {
+            return null;
+        }
+
+        // make the little finger to be unit 1 and the rest of the fingers to be
+        // product of the little finger
+        double lf = fingerlen[0];
+        for (int i = 0; i < 5; i++) {
+            fingerlen[i] = fingerlen[i] / lf;
+            fingerlen[i] = Double.parseDouble(numberFormat.format(fingerlen[i]));
+        }
+        return new Hand(fingerlen[0], fingerlen[1], fingerlen[2], fingerlen[3], fingerlen[4]);
     }
 }

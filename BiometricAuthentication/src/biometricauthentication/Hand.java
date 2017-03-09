@@ -8,6 +8,16 @@ import java.io.Serializable;
  */
 public class Hand implements Serializable {
 
+    private String userId;
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+    
     /* Length of specific finger*/
     private double LittleFingerLen;
     private double RingFingerLen;
@@ -24,6 +34,17 @@ public class Hand implements Serializable {
         this.IndexFingerLen = IndexFingerLen;
         this.ThumbFingerLen = ThumbFingerLen;
     }
+
+    public Hand(String userId, double LittleFingerLen, double RingFingerLen, double MiddleFingerLen, double IndexFingerLen, double ThumbFingerLen) {
+        this.userId = userId;
+        this.LittleFingerLen = LittleFingerLen;
+        this.RingFingerLen = RingFingerLen;
+        this.MiddleFingerLen = MiddleFingerLen;
+        this.IndexFingerLen = IndexFingerLen;
+        this.ThumbFingerLen = ThumbFingerLen;
+    }
+    
+    
 
     public double getLittleFingerLen() {
         return LittleFingerLen;

@@ -18,6 +18,8 @@ import javax.swing.border.LineBorder;
 public class AuthenticationUi extends javax.swing.JFrame {
 
     JComponent[] coms = new JComponent[10];
+    private boolean isImageSelected = false;
+
     public AuthenticationUi() {
         initComponents();
         fileSelect.setVisible(false);
@@ -60,7 +62,9 @@ public class AuthenticationUi extends javax.swing.JFrame {
         BtnValidate = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMinimumSize(new java.awt.Dimension(900, 600));
+        setMaximumSize(new java.awt.Dimension(900, 650));
+        setMinimumSize(new java.awt.Dimension(900, 650));
+        setSize(new java.awt.Dimension(900, 650));
         getContentPane().setLayout(null);
 
         fileSelect.addActionListener(new java.awt.event.ActionListener() {
@@ -121,7 +125,7 @@ public class AuthenticationUi extends javax.swing.JFrame {
         jSeparator2.setForeground(new java.awt.Color(102, 102, 102));
         jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
         getContentPane().add(jSeparator2);
-        jSeparator2.setBounds(470, 60, 10, 520);
+        jSeparator2.setBounds(450, 60, 10, 520);
 
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel10.setText("T2");
@@ -130,7 +134,7 @@ public class AuthenticationUi extends javax.swing.JFrame {
 
         jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/hand.png"))); // NOI18N
         getContentPane().add(jLabel12);
-        jLabel12.setBounds(510, 60, 408, 513);
+        jLabel12.setBounds(490, 60, 408, 513);
 
         TbtnSelectImage.setText("Select Image");
         TbtnSelectImage.addActionListener(new java.awt.event.ActionListener() {
@@ -147,14 +151,14 @@ public class AuthenticationUi extends javax.swing.JFrame {
         getContentPane().add(lblHand);
         lblHand.setBounds(20, 60, 410, 500);
 
-        BtnInsert.setText("Insert");
+        BtnInsert.setText("Sign Up");
         BtnInsert.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BtnInsertActionPerformed(evt);
             }
         });
         getContentPane().add(BtnInsert);
-        BtnInsert.setBounds(280, 10, 80, 29);
+        BtnInsert.setBounds(270, 590, 92, 29);
 
         BtnValidate.setText("Validate");
         BtnValidate.addActionListener(new java.awt.event.ActionListener() {
@@ -163,7 +167,7 @@ public class AuthenticationUi extends javax.swing.JFrame {
             }
         });
         getContentPane().add(BtnValidate);
-        BtnValidate.setBounds(380, 10, 94, 29);
+        BtnValidate.setBounds(350, 590, 94, 29);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -185,33 +189,45 @@ public class AuthenticationUi extends javax.swing.JFrame {
                 BufferedImage image = ImageIO.read(file);
                 BufferedImage resizedImage = ResizeImage.resize(image, 408, 513);
                 lblHand.setIcon(new ImageIcon(resizedImage));
+                isImageSelected = true;
             } catch (IOException e) {
                 e.printStackTrace();
+                isImageSelected = false;
             }
         }
 
     }//GEN-LAST:event_fileSelectActionPerformed
 
     private void BtnInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnInsertActionPerformed
-        Hand hand = getHand();
-        if (hand == null) return;
-        boolean b = new HandHandler().insertHand(hand);
-        if(b) JOptionPane.showMessageDialog(this, "Insertion Succesfull!","Succesfull", 
-                JOptionPane.INFORMATION_MESSAGE);
-        else JOptionPane.showMessageDialog(this, "Error when inserting the hand","Error",
-                JOptionPane.ERROR_MESSAGE);
+        if (isImageSelected) {
+            Hand hand = new HandHandler().getHand(coms);
+            if (hand == null) {
+                JOptionPane.showMessageDialog(this, "Mark the points as shown in the image", "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            new SignupPage(hand, this, true).setVisible(true);
+            
+            
+        } else {
+            JOptionPane.showMessageDialog(this, "Select Image!", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
 
     }//GEN-LAST:event_BtnInsertActionPerformed
 
     private void BtnValidateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnValidateActionPerformed
-        Hand hand = getHand();
-        if (hand == null) return;
+        Hand hand = new HandHandler().getHand(coms);
+        if (hand == null) {
+            return;
+        }
         boolean b = SecurityHandler.checkForMatch(hand);
-        if(b){
+        if (b) {
             JOptionPane.showMessageDialog(this, "Permission Granted", "Succesfull",
                     JOptionPane.INFORMATION_MESSAGE);
-        }else{
-            JOptionPane.showMessageDialog(this, "No matched hand is found!","Invalid",
+        } else {
+            JOptionPane.showMessageDialog(this, "No matched hand is found!", "Invalid",
                     JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_BtnValidateActionPerformed
@@ -272,23 +288,4 @@ public class AuthenticationUi extends javax.swing.JFrame {
     private javax.swing.JLabel lblHand;
     // End of variables declaration//GEN-END:variables
 
-    private Hand getHand(){
-        double[] fingerlen =  new double[5];
-        DecimalFormat numberFormat = new DecimalFormat("#.00");
-        for(int i = 0 ; i < 5; i++){
-            fingerlen[i] = Math.sqrt(Math.pow((coms[i].getX()-coms[i+1].getX()), 2) 
-                + Math.pow((coms[i].getY()-coms[i+1].getY()), 2));
-        }
-        // if there is no finger measurement
-        if(fingerlen[0] == 0) return null;
-        
-        // make the little finger to be unit 1 and the rest of the fingers to be
-        // product of the little finger
-        double lf = fingerlen[0];
-        for(int i = 0; i<5 ; i++){
-            fingerlen[i] = fingerlen[i]/lf;
-            fingerlen[i] = Double.parseDouble(numberFormat.format(fingerlen[i]));
-        }
-        return new Hand(fingerlen[0], fingerlen[1], fingerlen[2], fingerlen[3], fingerlen[4]);
-    }
 }
